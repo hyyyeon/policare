@@ -53,47 +53,68 @@ const additionalFeatures = [
 
 export function FeatureCards() {
   return (
-    <section className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            복지랑의 주요 기능
+    <section className="py-24 bg-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-72 h-72 bg-gradient-primary opacity-5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-to-l from-secondary to-accent opacity-5 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-card border border-border/50 mb-6">
+            <span className="text-sm font-medium text-primary">✨ 주요 서비스</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            복지랑이 제공하는
+            <br />
+            <span className="bg-gradient-primary bg-clip-text text-transparent">스마트한 기능들</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            AI 기술과 최신 정책 데이터로 여러분에게 가장 적합한 복지 정보를 제공합니다
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            AI 기술과 최신 정책 데이터로 여러분에게 가장 적합한 복지 정보를 
+            정확하고 빠르게 제공합니다
           </p>
         </div>
 
-        {/* Main feature cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        {/* Enhanced Main feature cards */}
+        <div className="grid md:grid-cols-3 gap-10 mb-20">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-hover transition-smooth bg-gradient-card border-border/50 overflow-hidden"
+                className="group hover:shadow-hover hover:-translate-y-2 transition-all duration-300 bg-gradient-card border-border/50 overflow-hidden relative"
               >
-                <CardHeader className="pb-4">
-                  <div className="relative mb-4">
-                    <img
-                      src={feature.image}
-                      alt={feature.title}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-80 rounded-lg flex items-center justify-center`}>
-                      <Icon className="w-12 h-12 text-white" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <CardHeader className="pb-6 relative">
+                  <div className="relative mb-6">
+                    <div className="relative overflow-hidden rounded-xl">
+                      <img
+                        src={feature.image}
+                        alt={feature.title}
+                        className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-85 flex items-center justify-center`}>
+                        <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                          <Icon className="w-14 h-14 text-white drop-shadow-md" />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <CardTitle className="text-xl text-foreground">{feature.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">
+                  <CardTitle className="text-2xl text-foreground font-bold mb-3">{feature.title}</CardTitle>
+                  <CardDescription className="text-muted-foreground text-base leading-relaxed">
                     {feature.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <Button asChild className="w-full group-hover:shadow-md transition-smooth">
+                <CardContent className="relative">
+                  <Button 
+                    asChild 
+                    className="w-full group-hover:shadow-md transition-all duration-300 bg-gradient-primary hover:scale-105"
+                  >
                     <Link to={feature.href}>
-                      바로 이용하기
-                      <ExternalLink className="w-4 h-4 ml-2" />
+                      <span className="font-semibold">바로 이용하기</span>
+                      <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
                 </CardContent>
@@ -102,19 +123,22 @@ export function FeatureCards() {
           })}
         </div>
 
-        {/* Additional features */}
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Enhanced Additional features */}
+        <div className="grid md:grid-cols-3 gap-8">
           {additionalFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <Card key={index} className="text-center p-6 bg-gradient-card border-border/50">
-                <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-6 h-6 text-primary-foreground" />
+              <Card 
+                key={index} 
+                className="text-center p-8 bg-gradient-card border-border/50 hover:shadow-card hover:-translate-y-1 transition-all duration-300 group"
+              >
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-card group-hover:shadow-hover transition-shadow duration-300">
+                  <Icon className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
+                <h3 className="text-xl font-bold text-foreground mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
               </Card>
