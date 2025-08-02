@@ -4,10 +4,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Chat from "./pages/Chat";
-import Calendar from "./pages/Calendar";
-import Bookmarks from "./pages/Bookmarks";
-import Profile from "./pages/Profile";
+import Chat from "./components/aichat/ChatPage";
+import Calendar from "./components/calendar/CalendarPage";
+import Bookmarks from "./components/bookmarks/BookmarksPage";
+import Profile from "./components/profile/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
