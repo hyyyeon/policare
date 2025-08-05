@@ -3,15 +3,29 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Send, MessageCircle, User, Bot, ExternalLink } from "lucide-react";
+import { Send, MessageCircle, User, Bot, ExternalLink, Home } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { PolicyResponse } from "./PolicyResponse";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
-  type: 'user' | 'bot';
+  type: 'user' | 'bot' | 'policy';
   content: string;
   timestamp: Date;
   sources?: { title: string; url: string }[];
+  policyData?: {
+    title: string;
+    icon: React.ReactNode;
+    target: string;
+    period: string;
+    support: string;
+    method: string;
+    link: {
+      title: string;
+      url: string;
+    };
+  };
 }
 
 const suggestedQuestions = [
@@ -29,6 +43,7 @@ const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [searchParams] = useSearchParams();
+  const { toast } = useToast();
 
   useEffect(() => {
     const question = searchParams.get('q');
@@ -61,16 +76,38 @@ const Chat = () => {
 
     // 시뮬레이션된 AI 응답
     setTimeout(() => {
-      const botMessage: Message = {
-        type: 'bot',
-        content: `"${messageToSend}"에 대한 정책 정보를 찾아드릴게요.\n\n청년 월세 지원의 경우, 만 19~34세 청년을 대상으로 하며 월 20만원까지 최대 12개월간 지원됩니다. 신청은 복지로 홈페이지나 주민센터에서 가능합니다.\n\n신청 자격:\n• 만 19~34세 청년\n• 부모와 별도 거주\n• 소득 기준 충족\n\n필요 서류:\n• 주민등록등본\n• 소득증명서\n• 임대차계약서`,
-        timestamp: new Date(),
-        sources: [
-          { title: "복지로 - 청년 월세 지원", url: "https://www.bokjiro.go.kr" },
-          { title: "마이홈포털 - 주거급여", url: "https://www.myhome.go.kr" }
-        ]
-      };
-      setMessages(prev => [...prev, botMessage]);
+      // 정책 관련 질문인지 확인
+      if (messageToSend.includes('월세') || messageToSend.includes('청년') || messageToSend.includes('지원')) {
+        const policyMessage: Message = {
+          type: 'policy',
+          content: '청년 월세 특별지원 정책 정보를 찾았습니다.',
+          timestamp: new Date(),
+          policyData: {
+            title: '청년 월세 특별지원',
+            icon: <Home className="w-5 h-5" />,
+            target: '만 19세 ~ 34세 독립세대 청년',
+            period: '2025.03.01 ~ 2025.05.31',
+            support: '월 최대 20만원 지원 (최대 12개월)',
+            method: '복지로 사이트 또는 주민센터 방문',
+            link: {
+              title: '정부24 바로가기',
+              url: 'https://www.gov.kr'
+            }
+          }
+        };
+        setMessages(prev => [...prev, policyMessage]);
+      } else {
+        const botMessage: Message = {
+          type: 'bot',
+          content: `"${messageToSend}"에 대한 정보를 찾아드리고 있습니다. 구체적인 정책명이나 키워드를 포함해서 질문해주시면 더 정확한 정보를 제공할 수 있습니다.`,
+          timestamp: new Date(),
+          sources: [
+            { title: "복지로 - 통합 복지 서비스", url: "https://www.bokjiro.go.kr" },
+            { title: "정부24 - 온라인 민원서비스", url: "https://www.gov.kr" }
+          ]
+        };
+        setMessages(prev => [...prev, botMessage]);
+      }
       setIsLoading(false);
     }, 1000);
   };
@@ -80,6 +117,20 @@ const Chat = () => {
       e.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const handleBookmark = () => {
+    toast({
+      title: "즐겨찾기 추가",
+      description: "정책이 즐겨찾기에 추가되었습니다.",
+    });
+  };
+
+  const handleCalendar = () => {
+    toast({
+      title: "캘린더 등록",
+      description: "정책 일정이 캘린더에 등록되었습니다.",
+    });
   };
 
   return (
@@ -118,35 +169,45 @@ const Chat = () => {
                       </Avatar>
                     )}
                     
-                    <div
-                      className={`max-w-[80%] rounded-lg p-3 ${
-                        message.type === 'user'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted border'
-                      }`}
-                    >
-                      <div className="whitespace-pre-wrap text-sm">
-                        {message.content}
+                    {message.type === 'policy' && message.policyData ? (
+                      <div className="max-w-[90%]">
+                        <PolicyResponse 
+                          data={message.policyData}
+                          onBookmark={handleBookmark}
+                          onCalendar={handleCalendar}
+                        />
                       </div>
-                      
-                      {message.sources && (
-                        <div className="mt-3 pt-3 border-t border-border/50">
-                          <p className="text-xs font-medium mb-2">참고 자료:</p>
-                          {message.sources.map((source, idx) => (
-                            <a
-                              key={idx}
-                              href={source.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1 text-xs text-primary hover:underline"
-                            >
-                              <ExternalLink className="w-3 h-3" />
-                              {source.title}
-                            </a>
-                          ))}
+                    ) : (
+                      <div
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          message.type === 'user'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-muted border'
+                        }`}
+                      >
+                        <div className="whitespace-pre-wrap text-sm">
+                          {message.content}
                         </div>
-                      )}
-                    </div>
+                        
+                        {message.sources && (
+                          <div className="mt-3 pt-3 border-t border-border/50">
+                            <p className="text-xs font-medium mb-2">참고 자료:</p>
+                            {message.sources.map((source, idx) => (
+                              <a
+                                key={idx}
+                                href={source.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1 text-xs text-primary hover:underline"
+                              >
+                                <ExternalLink className="w-3 h-3" />
+                                {source.title}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                     
                     {message.type === 'user' && (
                       <Avatar className="w-8 h-8">
