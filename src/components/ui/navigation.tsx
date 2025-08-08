@@ -33,11 +33,12 @@ export function Navigation() {
               return (
                 <Button
                   key={item.name}
-                  variant={isActive ? "default" : "ghost"}
+                  variant="ghost"
+                  size="sm"
                   asChild
                   className={cn(
-                    "flex items-center space-x-2 px-4 py-2",
-                    isActive && "bg-gradient-primary text-primary-foreground shadow-md"
+                    "flex items-center space-x-2 px-3",
+                    isActive ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   <Link to={item.href}>
@@ -61,10 +62,10 @@ export function Navigation() {
 
           {/* Auth actions */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground">
               <Link to="/login">로그인</Link>
             </Button>
-            <Button asChild>
+            <Button variant="outline" size="sm" asChild>
               <Link to="/signup">회원가입</Link>
             </Button>
           </div>
@@ -97,10 +98,10 @@ export function Navigation() {
           })}
 
           <div className="pt-2 flex gap-2">
-            <Button variant="ghost" className="flex-1" asChild>
+            <Button variant="ghost" size="sm" className="flex-1" asChild>
               <Link to="/login">로그인</Link>
             </Button>
-            <Button className="flex-1" asChild>
+            <Button variant="outline" size="sm" className="flex-1" asChild>
               <Link to="/signup">회원가입</Link>
             </Button>
           </div>
