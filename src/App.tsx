@@ -9,6 +9,8 @@ import Calendar from "./components/calendar/CalendarPage";
 import Bookmarks from "./components/bookmarks/BookmarksPage";
 import Profile from "./components/profile/ProfilePage";
 import NotFound from "./pages/NotFound";
+import Login from "./components/login/LoginPage";
+import Signup from "./components/login/SignupPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -58,6 +58,16 @@ export function Navigation() {
               </svg>
             </Button>
           </div>
+
+          {/* Auth actions */}
+          <div className="hidden md:flex items-center space-x-2">
+            <Button variant="ghost" asChild>
+              <Link to="/login">로그인</Link>
+            </Button>
+            <Button asChild>
+              <Link to="/signup">회원가입</Link>
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -85,6 +95,15 @@ export function Navigation() {
               </Button>
             );
           })}
+
+          <div className="pt-2 flex gap-2">
+            <Button variant="ghost" className="flex-1" asChild>
+              <Link to="/login">로그인</Link>
+            </Button>
+            <Button className="flex-1" asChild>
+              <Link to="/signup">회원가입</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
