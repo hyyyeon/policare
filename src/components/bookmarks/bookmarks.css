@@ -1,0 +1,59 @@
+@layer components {
+  .bookmarks-page {
+    @apply min-h-screen bg-gradient-subtle;
+  }
+  .bookmarks-container {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+  .bookmarks-header {
+    @apply mb-8;
+  }
+  .bookmarks-title {
+    @apply text-3xl font-bold text-foreground mb-2;
+  }
+  .bookmarks-subtitle {
+    @apply text-muted-foreground;
+  }
+  .bookmarks-filters {
+    @apply flex flex-wrap items-center gap-4 mb-6;
+  }
+  .bookmarks-category {
+    @apply flex items-center gap-2;
+  }
+  .bookmarks-sort {
+    @apply flex items-center gap-2 ml-auto;
+  }
+  .bookmarks-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+  .bookmarks-empty {
+    @apply p-12 text-center md:col-span-2;
+  }
+  .bookmark-card {
+    @apply hover:shadow-md transition-shadow h-full;
+  }
+  .bookmark-card-title {
+    @apply text-base md:text-lg;
+  }
+  .bookmark-meta {
+    @apply flex items-center justify-between mb-4 text-sm text-muted-foreground;
+  }
+  .bookmark-meta-items {
+    @apply flex flex-wrap items-center gap-4;
+  }
+  .bookmark-actions {
+    @apply flex items-center justify-between;
+  }
+  .bookmark-action-left {
+    @apply flex items-center gap-3;
+  }
+  .bookmark-notify {
+    @apply flex items-center gap-2;
+  }
+  .bookmark-delete-btn {
+    @apply text-muted-foreground hover:text-destructive;
+  }
+  .muted-icon {
+    @apply text-muted-foreground;
+  }
+}

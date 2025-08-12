@@ -13,6 +13,7 @@ import {
   SortAsc
 } from "lucide-react";
 import { useState } from "react";
+import "./bookmarks.css";
 
 const mockBookmarks = [
   {
@@ -82,20 +83,20 @@ const BookmarksPage = () => {
     });
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="bookmarks-page">
       <Navigation />
       
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">즐겨찾기</h1>
-          <p className="text-muted-foreground">저장한 정책들을 관리하고 알림을 설정하세요</p>
+      <main className="bookmarks-container">
+        <div className="bookmarks-header">
+          <h1 className="bookmarks-title">즐겨찾기</h1>
+          <p className="bookmarks-subtitle">저장한 정책들을 관리하고 알림을 설정하세요</p>
         </div>
 
         {/* 필터 및 정렬 */}
-        <div className="flex flex-wrap items-center gap-4 mb-6">
+        <div className="bookmarks-filters">
           {/* 카테고리 필터 */}
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-muted-foreground" />
+          <div className="bookmarks-category">
+            <Filter className="w-4 h-4 muted-icon" />
             <span className="text-sm font-medium">카테고리:</span>
             {categories.map((category) => (
               <Button
@@ -111,8 +112,8 @@ const BookmarksPage = () => {
           </div>
 
           {/* 정렬 */}
-          <div className="flex items-center gap-2 ml-auto">
-            <SortAsc className="w-4 h-4 text-muted-foreground" />
+          <div className="bookmarks-sort">
+            <SortAsc className="w-4 h-4 muted-icon" />
             <span className="text-sm font-medium">정렬:</span>
             <Button
               variant={sortBy === "deadline" ? "secondary" : "ghost"}
@@ -132,10 +133,10 @@ const BookmarksPage = () => {
         </div>
 
         {/* 북마크 목록 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bookmarks-grid">
           {filteredAndSortedBookmarks.length === 0 ? (
-            <Card className="p-12 text-center md:col-span-2">
-              <Bookmark className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+            <Card className="bookmarks-empty">
+              <Bookmark className="w-12 h-12 mx-auto mb-4 muted-icon opacity-50" />
               <h3 className="text-lg font-semibold text-foreground mb-2">
                 저장된 정책이 없습니다
               </h3>
@@ -145,12 +146,12 @@ const BookmarksPage = () => {
             </Card>
           ) : (
             filteredAndSortedBookmarks.map((bookmark) => (
-              <Card key={bookmark.id} className="hover:shadow-md transition-shadow h-full">
+              <Card key={bookmark.id} className="bookmark-card">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <CardTitle className="text-base md:text-lg">{bookmark.title}</CardTitle>
+                        <CardTitle className="bookmark-card-title">{bookmark.title}</CardTitle>
                         <Badge variant="secondary">{bookmark.category}</Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
@@ -161,7 +162,7 @@ const BookmarksPage = () => {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeBookmark(bookmark.id)}
-                      className="text-muted-foreground hover:text-destructive"
+                      className="bookmark-delete-btn"
                       aria-label="북마크 삭제"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -170,8 +171,8 @@ const BookmarksPage = () => {
                 </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
-                    <div className="flex flex-wrap items-center gap-4">
+                  <div className="bookmark-meta">
+                    <div className="bookmark-meta-items">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         마감: {bookmark.deadline}
@@ -181,10 +182,10 @@ const BookmarksPage = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <Bell className="w-4 h-4 text-muted-foreground" />
+                  <div className="bookmark-actions">
+                    <div className="bookmark-action-left">
+                      <div className="bookmark-notify">
+                        <Bell className="w-4 h-4 muted-icon" />
                         <span className="text-sm">알림</span>
                         <Switch
                           checked={bookmark.notificationEnabled}
