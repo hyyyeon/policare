@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
 import "./profile.css";
 
 const ProfilePage = () => {
@@ -79,8 +80,15 @@ const ProfilePage = () => {
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">마이페이지</h1>
-          <p className="text-muted-foreground">개인정보와 알림 설정을 관리하세요</p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-foreground mb-2">마이페이지</h1>
+              <p className="text-muted-foreground">개인정보와 알림 설정을 관리하세요</p>
+            </div>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/profile/ui-guide" aria-label="마이페이지 UI 가이드로 이동">UI 가이드</Link>
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

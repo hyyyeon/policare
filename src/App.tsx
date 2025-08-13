@@ -8,6 +8,7 @@ import Chat from "./components/aichat/ChatPage";
 import Calendar from "./components/calendar/CalendarPage";
 import Bookmarks from "./components/bookmarks/BookmarksPage";
 import Profile from "./components/profile/ProfilePage";
+import ProfileUIGuide from "./pages/ProfileUIGuide";
 import NotFound from "./pages/NotFound";
 import Login from "./components/login/LoginPage";
 import Signup from "./components/login/SignupPage";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/ui-guide" element={<ProfileUIGuide />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
