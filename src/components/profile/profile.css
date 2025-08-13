@@ -1,0 +1,9 @@
+/* Profile page specific styles */
+@tailwind components;
+
+@layer components {
+  /* Root class for scoping optional page-level styles */
+  .profile-page {
+    /* Add page-specific @apply utilities here if needed */
+  }
+}

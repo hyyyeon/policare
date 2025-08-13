@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import "./profile.css";
 
 const ProfilePage = () => {
   const [userInfo, setUserInfo] = useState({
@@ -73,7 +74,7 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="profile-page min-h-screen bg-gradient-subtle">
       <Navigation />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
